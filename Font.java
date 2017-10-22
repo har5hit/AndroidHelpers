@@ -59,7 +59,7 @@ public class Font {
     }
 
     private static void applyFontToMenuItem(MenuItem mi) {
-        Typeface font = Typeface.createFromAsset(MyApplication.getContext().getAssets(), "BNKGOTHM.TTF");
+        Typeface font = getFont(false);
         SpannableString mNewTitle = new SpannableString(mi.getTitle());
         mNewTitle.setSpan(new CustomTypefaceSpan("" , font), 0 , mNewTitle.length(),  Spannable.SPAN_INCLUSIVE_INCLUSIVE);
         mi.setTitle(mNewTitle);
@@ -68,51 +68,9 @@ public class Font {
     public static Typeface getFont(boolean bold) {
         if (bold)
         {
-            return Typeface.createFromAsset(MyApplication.getContext().getAssets(), "lineto-circular-pro-bold.ttf");
+            return Typeface.createFromAsset(MyApplication.getContext().getAssets(), "<font-name-bold>.ttf");
 
         }
-        return Typeface.createFromAsset(MyApplication.getContext().getAssets(), "lineto-circular-pro-book.ttf");
-    }
-
-    private static class CustomTypefaceSpan extends TypefaceSpan {
-
-        public static Creator CREATOR;
-        private final Typeface newType;
-
-        public CustomTypefaceSpan(String family, Typeface type) {
-            super(family);
-            newType = type;
-        }
-
-        @Override
-        public void updateDrawState(TextPaint ds) {
-            applyCustomTypeFace(ds, newType);
-        }
-
-        @Override
-        public void updateMeasureState(TextPaint paint) {
-            applyCustomTypeFace(paint, newType);
-        }
-
-        private static void applyCustomTypeFace(Paint paint, Typeface tf) {
-            int oldStyle;
-            Typeface old = paint.getTypeface();
-            if (old == null) {
-                oldStyle = 0;
-            } else {
-                oldStyle = old.getStyle();
-            }
-
-            int fake = oldStyle & ~tf.getStyle();
-            if ((fake & Typeface.BOLD) != 0) {
-                paint.setFakeBoldText(true);
-            }
-
-            if ((fake & Typeface.ITALIC) != 0) {
-                paint.setTextSkewX(-0.25f);
-            }
-
-            paint.setTypeface(tf);
-        }
+        return Typeface.createFromAsset(MyApplication.getContext().getAssets(), "<font-name>.ttf");
     }
 }
