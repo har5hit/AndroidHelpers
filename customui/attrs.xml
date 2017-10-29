@@ -1,0 +1,54 @@
+<resources>
+
+    <!-- Declare custom theme attributes that allow changing which styles are
+         used for button bars depending on the API level.
+         ?android:attr/buttonBarStyle is new as of API 11 so this is
+         necessary to support previous API levels. -->
+    <declare-styleable name="ButtonBarContainerTheme">
+        <attr name="metaButtonBarStyle" format="reference" />
+        <attr name="metaButtonBarButtonStyle" format="reference" />
+    </declare-styleable>
+
+
+    <attr name="ratio" format="float"/>
+
+    <declare-styleable name="CarouselViewPager">
+        <attr name="page_margin" format="integer"/>
+        <attr name="padding" format="integer"/>
+        <attr name="ratio"/>
+    </declare-styleable>
+
+    <declare-styleable name="RatioImageView">
+
+        <attr name="ratio"/>
+    </declare-styleable>
+	
+	<!--OTPView-->
+	 <attr name="digits" format="integer"/>
+    <attr name="margin" format="dimension"/>
+    <attr name="margin_left" format="dimension"/>
+    <attr name="margin_right" format="dimension"/>
+    <attr name="margin_top" format="dimension"/>
+    <attr name="margin_bottom" format="dimension"/>
+
+    <attr name="padding" format="dimension"/>
+    <attr name="padding_left" format="dimension"/>
+    <attr name="padding_right" format="dimension"/>
+    <attr name="padding_top" format="dimension"/>
+    <attr name="padding_bottom" format="dimension"/>
+    <declare-styleable name="OTPView">
+        <attr name="digits"></attr>
+        <attr name="padding"></attr>
+        <attr name="padding_left"></attr>
+        <attr name="padding_right"></attr>
+        <attr name="padding_top"></attr>
+        <attr name="padding_bottom"></attr>
+        <attr name="margin"></attr>
+        <attr name="margin_left"></attr>
+        <attr name="margin_right"></attr>
+        <attr name="margin_top"></attr>
+        <attr name="margin_bottom"></attr>
+
+    </declare-styleable>
+
+</resources>
