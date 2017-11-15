@@ -558,4 +558,94 @@ public class Utils {
     {
         return new TypeToken<ArrayList<T>>(){}.getType();
     }
+	
+	 public static Calendar getRelativeCalender(long currentTimeMillis, int relative_year,int relative_month, int relative_day, int hour, int mins,int sec)
+    {
+        Calendar cur_cal = new GregorianCalendar();
+        cur_cal.setTimeInMillis(currentTimeMillis);//set the current time and date for this calendar
+        cur_cal.set(Calendar.DATE,cur_cal.get(Calendar.DATE)+relative_day);
+        cur_cal.set(Calendar.HOUR_OF_DAY, hour);
+        cur_cal.set(Calendar.MINUTE, mins);
+        cur_cal.set(Calendar.SECOND, sec);
+        cur_cal.set(Calendar.MILLISECOND, 0);
+        return cur_cal;
+    }
+
+    //dataTypes
+
+    public static <E,T> Map<E ,T>getMapObject(int capacity)
+    {
+
+        if (Build.VERSION.SDK_INT>=Build.VERSION_CODES.KITKAT)
+        {
+            return capacity>0?new ArrayMap<E,T>(capacity):new ArrayMap<E,T>();
+        }else
+        {
+            return capacity>0?new HashMap<E,T>(capacity):new HashMap<E,T>();
+        }
+    }
+
+
+    //system services
+
+    public static void setAlarm(Context context, int targetMillis, PendingIntent pintent){
+        AlarmManager alarm = (AlarmManager)context.getSystemService(Context.ALARM_SERVICE);
+        if (Build.VERSION.SDK_INT>=Build.VERSION_CODES.M)
+        {
+            alarm.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, targetMillis, pintent);
+
+        }else if (Build.VERSION.SDK_INT>=Build.VERSION_CODES.KITKAT)
+        {
+            alarm.setExact(AlarmManager.RTC_WAKEUP, targetMillis, pintent);
+
+        }else {
+            alarm.set(AlarmManager.RTC_WAKEUP, targetMillis, pintent);
+        }
+    }
+
+    public static String getDurationBreakdown(long millis)
+    {
+        if(millis < 0)
+        {
+            throw new IllegalArgumentException("Duration must be greater than zero!");
+        }
+
+        long days = TimeUnit.MILLISECONDS.toDays(millis);
+        millis -= TimeUnit.DAYS.toMillis(days);
+        long hours = TimeUnit.MILLISECONDS.toHours(millis);
+        millis -= TimeUnit.HOURS.toMillis(hours);
+        long minutes = TimeUnit.MILLISECONDS.toMinutes(millis);
+        millis -= TimeUnit.MINUTES.toMillis(minutes);
+        long seconds = TimeUnit.MILLISECONDS.toSeconds(millis);
+
+        StringBuilder sb = new StringBuilder(64);
+        sb.append(String.format("%02d",hours));
+        sb.append(":");
+        sb.append(String.format("%02d",minutes));
+        sb.append(":");
+        sb.append(String.format("%02d",seconds));
+        return(sb.toString());
+    }
+
+    public static void showApiToast(Context context,String message,boolean status) {
+        if (!(context==null || message.isEmpty())) {
+            LayoutInflater inflater = LayoutInflater.from(context);
+            View layout = inflater.inflate(R.layout.custom_toast_layout, null);
+
+            TextView text = (TextView) layout.findViewById(R.id.text);
+            ImageView img = (ImageView) layout.findViewById(R.id.image);
+
+            if (status) {
+                img.setImageResource(R.drawable.ic_check_green_24dp);
+            } else {
+                img.setImageResource(android.R.drawable.ic_delete);
+            }
+            text.setText(message);
+            Toast toast = new Toast(context);
+           // toast.setGravity(Gravity.BOTTOM, 0, 50);
+            toast.setDuration(Toast.LENGTH_SHORT);
+            toast.setView(layout);
+            toast.show();
+        }
+    }
 }
